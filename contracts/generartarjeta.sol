@@ -5,45 +5,30 @@ import "./safemath.sol";
 
 contract GenerarTarjeta is Pertenencia {
 
+// Usaremos la librería SafeMath
   using SafeMath for uint256;
 
-  event NewZombie(uint zombieId, string name, uint dna);
+  event NuevaTarjeta(uint IdTarjeta, string nombre, address imagen);
 
-  uint dnaDigits = 16;
-  uint dnaModulus = 10 ** dnaDigits;
-  uint cooldownTime = 1 days;
-
-  struct Zombie {
-    string name;
-    uint dna;
-    uint32 level;
-    uint32 readyTime;
-    uint16 winCount;
-    uint16 lossCount;
+// Estructura de una tarjeta. 
+  struct Tarjeta {
+    string nombre;
+    address direccionImagen;
+    uint32 nivel;
+    uint32 copias;
+    uint32 fechaEmision;
   }
 
-  Zombie[] public zombies;
+  Tarjeta[] public tarjetas;
 
-  mapping (uint => address) public zombieToOwner;
-  mapping (address => uint) ownerZombieCount;
+  mapping (uint => address) public tarjetaAlPropietario;
+  mapping (address => uint) contadorTarjetasDelPropietario;
 
-  function _createZombie(string _name, uint _dna) internal {
-    uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime), 0, 0)) - 1;
-    zombieToOwner[id] = msg.sender;
-    ownerZombieCount[msg.sender]++;
-    NewZombie(id, _name, _dna);
-  }
-
-  function _generateRandomDna(string _str) private view returns (uint) {
-    uint rand = uint(keccak256(_str));
-    return rand % dnaModulus;
-  }
-
-  function createRandomZombie(string _name) public {
-    require(ownerZombieCount[msg.sender] == 0);
-    uint randDna = _generateRandomDna(_name);
-    randDna = randDna - randDna % 100;
-    _createZombie(_name, randDna);
+  function _crearTarjeta(string _name, uint _direccionImagen) internal {
+    uint id = zombies.push(Zombie(_name, _direccionImagen) - 1;
+    tarjetaAlPropietario[id] = msg.sender;
+    contadorTarjetasDelPropietario[msg.sender]++;
+    NuevaTarjeta(id, _name, _direccionImagen);
   }
 
 }
