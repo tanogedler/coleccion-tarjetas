@@ -1,5 +1,6 @@
 /**
  * @title Pertenencia
+ * @author Jose Angel Contreras
  * @dev El contrato Pertenencia posee una direccion del usuario, posee las funciones de autorizacion
  * basicas, que simplifica la implementacion de los permisos de usuario.
  */
