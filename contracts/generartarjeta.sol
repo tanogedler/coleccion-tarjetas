@@ -8,7 +8,7 @@ contract GenerarTarjeta is Pertenencia {
 // Usaremos la librería SafeMath
   using SafeMath for uint256;
 
-  event NuevaTarjeta(uint IdTarjeta, string nombre, address imagen);
+  event NuevaTarjeta(uint IdTarjeta, string nombre, address direccionImagen);
 
 // Estructura de una tarjeta. 
   struct Tarjeta {
@@ -25,7 +25,7 @@ contract GenerarTarjeta is Pertenencia {
   mapping (address => uint) contadorTarjetasDelPropietario;
 
   function _crearTarjeta(string _name, uint _direccionImagen) internal {
-    uint id = zombies.push(Zombie(_name, _direccionImagen) - 1;
+    uint id = tarjetas.push(Tarjeta(_name, _direccionImagen)) - 1;
     tarjetaAlPropietario[id] = msg.sender;
     contadorTarjetasDelPropietario[msg.sender]++;
     NuevaTarjeta(id, _name, _direccionImagen);
