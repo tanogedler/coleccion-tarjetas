@@ -21,7 +21,7 @@ contract Pertenencia {
    * @dev Se asegura que la funcion sea llamada solo por el propietario.
    */
   modifier soloPropietario() {
-    require(msg.sender == owner);
+    require(msg.sender == propietario);
     _;
   }
 
