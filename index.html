@@ -17,19 +17,8 @@
 
       function startApp() {
         var ColeccionTarjetasAddress = "YOUR_CONTRACT_ADDRESS";
-        ColeccionTarjetas = new web3js.eth.Contract(ColeccionTarjetasABI, ColeccionTarjetasAddress);
-
-        var accountInterval = setInterval(function() {
-          // Comprobar si cambió la cuenta
-          if (web3.eth.accounts[0] !== userAccount) {
-            userAccount = web3.eth.accounts[0];
-            // Llama a la función para cambiar la interfaz con la nueva cuenta
-            getZombiesByOwner(userAccount)
-            .then(displayTarjetas);
-          }
-        }, 100);
-
-        // Start here
+        ColeccionTarjetas = new web3js.eth.Contract(ColeccionTarjetasABI, ColeccionTarjetasAddress)
+        // Debo definir el ABI de la app :  Application Binary Interface...
       }
 
       function displayTarjetas(ids) {
