@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>ColeccionTarjetas front-end</title>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="web3.min.js"></script>
+<!--    <script language="javascript" type="text/javascript" src="_abi.js"></script> -->
+  </head>
+  <body>
+    <div id="txStatus"></div>
+    <div id="zombies"></div>
+
+    <script>
+      var ColeccionTarjetas;
+      var userAccount;
+
+      function startApp() {
+        var ColeccionTarjetasAddress = "YOUR_CONTRACT_ADDRESS";
+        ColeccionTarjetas = new web3js.eth.Contract(ColeccionTarjetasABI, ColeccionTarjetasAddress);
+
+        var accountInterval = setInterval(function() {
+          // Comprobar si cambió la cuenta
+          if (web3.eth.accounts[0] !== userAccount) {
+            userAccount = web3.eth.accounts[0];
+            // Llama a la función para cambiar la interfaz con la nueva cuenta
+            getZombiesByOwner(userAccount)
+            .then(displayTarjetas);
+          }
+        }, 100);
+
+        // Start here
+      }
+
+      function displayTarjetas(ids) {
+        $("#tarjetas").empty();
+        for (id of ids) {
+          // Visualiza los detalles de una tarjeta desde nuestro contrato. Devuelve un objeto `tarjeta`
+          obtenerDetalleTarjeta(id)
+          .then(function(tarjeta) {
+            // Using ES6's "template literals" to inject variables into the HTML.
+            $("#tarjetas").append(`<div class="tarjeta">
+              <ul>
+                <li>Nombre: ${tarjeta.nombre}</li>
+                <li>Direccion: ${tarjeta.direccionImagen}</li>
+                <li>Nivel: ${tarjeta.nivel}</li>
+                <li>Copias: ${tarjeta.copias}</li>
+                <li>Fecha: ${tarjeta.fechaEmision}</li>
+              </ul>
+            </div>`);
+          });
+        }
+      }
+
+      function crearTarjeta(name) {
+        // AQUI ...
+
+      }
+
+
+      window.addEventListener('load', function() {
+      /* Tomamos lo siguiente por si vamos a usar MetaMask para manejar firmas de los usuarios.
+        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== 'undefined') {
+          // Use Mist/MetaMask's provider
+          web3js = new Web3(web3.currentProvider);
+        } else {
+          // Handle the case where the user doesn't have Metamask installed
+          // Probably show them a message prompting them to install Metamask
+        }
+        */
+
+        // Se inicia la app y se accesa a web3:
+        startApp()
+
+      })
+    </script>
+  </body>
+</html>
