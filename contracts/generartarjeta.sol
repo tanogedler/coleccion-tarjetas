@@ -24,8 +24,8 @@ contract GenerarTarjeta is Pertenencia {
   mapping (uint => address) public tarjetaAlPropietario;
   mapping (address => uint) contadorTarjetasDelPropietario;
 
-  function _crearTarjeta(string _name, uint _direccionImagen) internal {
-    uint id = tarjetas.push(Tarjeta(_name, _direccionImagen)) - 1;
+  function _crearTarjeta(string _name, address _direccionImagen) internal {
+    uint id = tarjetas.push(Tarjeta(_name, _direccionImagen, 0, 1, 0)) - 1;
     tarjetaAlPropietario[id] = msg.sender;
     contadorTarjetasDelPropietario[msg.sender]++;
     NuevaTarjeta(id, _name, _direccionImagen);

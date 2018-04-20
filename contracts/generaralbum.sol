@@ -9,7 +9,7 @@ contract GenerarAlbum is Pertenencia {
 
   event NuevoAlbum(uint IdAlbum, string nombre, address direccionAlbum);
 
-// Estructura de una tarjeta. 
+// Estructura de un album. 
   struct Album {
     string nombre;
     address direccionAlbum;
@@ -21,11 +21,11 @@ contract GenerarAlbum is Pertenencia {
   mapping (uint => address) public albumAlPropietario;
   mapping (address => uint) contadorAlbumDelPropietario;
 
-  function _crearAlbum(string _name, uint _direccionAlbum) internal {
-    uint id = albumes.push(Album(_name, _direccionAlbum) - 1;
+  function _crearAlbum(string _nombre, address _direccionAlbum, uint32 _fecha) internal {
+    uint id = albumes.push(Album(_nombre, _direccionAlbum, _fecha)) - 1;
     albumAlPropietario[id] = msg.sender;
     contadorAlbumDelPropietario[msg.sender]++;
-    NuevoAlbum(id, _name, _direccionAlbum);
+    NuevoAlbum(id, _nombre, _direccionAlbum);
   }
 
 }

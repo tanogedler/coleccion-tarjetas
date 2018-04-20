@@ -1,3 +1,4 @@
+pragma solidity ^0.4.19;
 /**
  * @title Pertenencia
  * @author Jose Angel Contreras
@@ -31,7 +32,7 @@ contract Pertenencia {
    * @dev Permite al propietario actual transferir el control del contrato al nuevoPropietario.
    * @param nuevoPropietario  Direccion a la cual se transfiere la propiedad.
    */
-  function transferirPropiedad(address nuevoPropietario) public onlyOwner {
+  function transferirPropiedad(address nuevoPropietario) public soloPropietario {
     require(nuevoPropietario != address(0));
     PertenenciaTransferida(propietario, nuevoPropietario);
     propietario = nuevoPropietario;
