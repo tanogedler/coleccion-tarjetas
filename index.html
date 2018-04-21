@@ -6,10 +6,12 @@
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script language="javascript" type="text/javascript" src="web3.min.js"></script>
 <!--    <script language="javascript" type="text/javascript" src="_abi.js"></script> -->
+ <link href='https://fonts.googleapis.com/css?family=Open Sans:400,700' rel='stylesheet' type='text/css'>
+ <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
   </head>
-  <body>
+  <body class="container">
     <div id="txStatus"></div>
-    <div id="zombies"></div>
+    <div id="tarjetas"></div>
 
     <script>
       var ColeccionTarjetas;
@@ -63,5 +65,35 @@
         startApp()
       })
     </script>
+  <h1>Colección de Tarjetas únicas en la Blockchain de Ethereum</h1>
+ <div class="table-responsive">
+  <table class="table table-bordered">
+   <thead>
+    <tr>
+     <th>Álbum</th>
+     <th>Tarjetas</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td></td>
+     <td id="candidate-1"></td>
+    </tr>
+    <tr>
+     <td></td>
+     <td id="candidate-2"></td>
+    </tr>
+    <tr>
+     <td></td>
+     <td id="candidate-3"></td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <a href="#" onclick="displayTarjetas()" class="btn btn-primary">Generar Álbum</a>
+ <a href="#" onclick="displayAlbum()" class="btn btn-primary">Generar Tarjeta</a>
   </body>
+  <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+  <script src="./index.js"></script>
 </html>
