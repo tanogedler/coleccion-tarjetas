@@ -1,34 +1,47 @@
 pragma solidity ^0.4.19;
 
-import "./pertenencia.sol";
+import "./ownable.sol";
 import "./safemath.sol";
 
-contract GenerarTarjeta is Pertenencia {
+contract GenerarTarjeta is Ownable {
 
 // Usaremos la librería SafeMath
   using SafeMath for uint256;
 
-  event NuevaTarjeta(uint IdTarjeta, string nombre, address direccionImagen);
+  event NuevaTarjeta(uint tarjetaId, string nombre, uint randomTarjeta);
+  
+  uint digitosRandom = 16;
+  uint modulo = 10 ** digitosRandom;
 
-// Estructura de una tarjeta. 
+// Estructura de una tarjeta 
   struct Tarjeta {
     string nombre;
-    address direccionImagen;
-    uint32 nivel;
-    uint32 copias;
-    uint32 fechaEmision;
+    uint randomTarjeta;
+    uint32 nivelTarjeta;
+    uint fechaEmision;
   }
 
   Tarjeta[] public tarjetas;
 
   mapping (uint => address) public tarjetaAlPropietario;
-  mapping (address => uint) contadorTarjetasDelPropietario;
+  mapping (address => uint) contadorTarjetaPropietario;
 
-  function _crearTarjeta(string _name, address _direccionImagen) internal {
-    uint id = tarjetas.push(Tarjeta(_name, _direccionImagen, 0, 1, 0)) - 1;
+  function _crearTarjeta(string _nombre, uint _randomTarjeta) internal {
+    uint id = tarjetas.push(Tarjeta(_nombre, _randomTarjeta, 1, now)) - 1;
     tarjetaAlPropietario[id] = msg.sender;
-    contadorTarjetasDelPropietario[msg.sender]++;
-    NuevaTarjeta(id, _name, _direccionImagen);
+    contadorTarjetaPropietario[msg.sender]++;
+    emit NuevaTarjeta(id, _nombre, _randomTarjeta);
   }
 
+  function _generaValorRandomTarjeta (string _str) private view returns (uint) {
+    uint rand = uint(keccak256(_str));
+    return rand % modulo;
+  }
+
+  function _crearTarjetaAleatorio(string _nombre) public {
+    require(contadorTarjetaPropietario[msg.sender] == 0);
+    uint randValor = _generaValorRandomTarjeta(_nombre);
+    randValor = randValor - randValor % 100;
+    _crearTarjeta(_nombre, randValor);
+  }
 }
