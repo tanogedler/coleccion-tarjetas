@@ -1,27 +1,23 @@
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.19;
 
 import "truffle/Assert.sol";
 import "truffle/DeployedAddresses.sol";
-import "../contracts/generaralbum.sol";
-import "../contracts/genertarjeta.sol";
+import "../contracts/MetaCoin.sol";
 
-contract TestGeneracion {
-
-  function testInicialGenerarTarjeta() public {
-    Tarjeta tarjeta = crearTarjeta(DeployedAddresses.crearTarjeta());
+contract TestMetacoin {
+  function testInitialBalanceUsingDeployedContract() {
+    MetaCoin meta = MetaCoin(DeployedAddresses.MetaCoin());
 
     uint expected = 10000;
 
-
+    Assert.equal(meta.getBalance(tx.origin), expected, "Owner should have 10000 MetaCoin initially");
   }
 
-  function testInicialGenerarAlbum() public {
-    Tarjeta tarjeta = crearAlbum(DeployedAddresses.crearAlbum());
+  function testInitialBalanceWithNewMetaCoin() {
+    MetaCoin meta = new MetaCoin();
 
     uint expected = 10000;
 
-
+    Assert.equal(meta.getBalance(tx.origin), expected, "Owner should have 10000 MetaCoin initially");
   }
-
-
 }
