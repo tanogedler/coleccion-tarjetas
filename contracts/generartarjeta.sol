@@ -1,4 +1,4 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.24;
 
 import "./ownable.sol";
 import "./safemath.sol";
@@ -34,7 +34,7 @@ contract GenerarTarjeta is Ownable {
   }
 
   function _generaValorRandomTarjeta (string _str) private view returns (uint) {
-    uint rand = uint(keccak256(_str));
+    uint rand = uint(keccak256(abi.encodePacked(_str)));
     return rand % modulo;
   }
 

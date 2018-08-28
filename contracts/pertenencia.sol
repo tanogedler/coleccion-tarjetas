@@ -1,4 +1,4 @@
-pragma solidity ^0.4.19;
+pragma solidity ^0.4.24;
 /**
  * @title Pertenencia
  * @author Jose Angel Contreras
@@ -34,7 +34,7 @@ contract Pertenencia {
    */
   function transferirPropiedad(address nuevoPropietario) public soloPropietario {
     require(nuevoPropietario != address(0));
-    PertenenciaTransferida(propietario, nuevoPropietario);
+    emit PertenenciaTransferida(propietario, nuevoPropietario);
     propietario = nuevoPropietario;
   }
 
